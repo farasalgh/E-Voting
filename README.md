@@ -82,13 +82,13 @@ php artisan serve
 E-Voting/
 ├── app/
 │   ├── Http/Controllers/   # Controllers
-│   ├── Models/            # Database models
+│   └── Models/            # Database models
 ├── database/
 │   ├── migrations/       # Database migrations
 │   └── seeders/         # Database seeders
 ├── public/              # Public assets
 ├── resources/
-│   ├── views/           # Blade templates
+│   └── views/           # Blade templates
 └── routes/              # Application routes
 ```
 
