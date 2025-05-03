@@ -194,7 +194,11 @@
             tbody.innerHTML = '';
 
             data.forEach(candidate => {
-                const percentage = totalVotes > 0 ? ((candidate.votes_count / totalVotes) * 100).toFixed(2) : 0;
+                // Calculate percentage based on total votes, not total voters
+                const percentage = totalVotes > 0
+                    ? ((candidate.votes_count / totalVotes) * 100).toFixed(2)
+                    : 0;
+
                 const row = tbody.insertRow();
                 row.innerHTML = `
                     <td>
@@ -229,15 +233,25 @@
                 const response = await fetch('/api/vote-results');
                 const data = await response.json();
 
+                // Calculate total votes and participation rate
                 const totalVotes = data.reduce((sum, candidate) => sum + candidate.votes_count, 0);
                 const totalVoters = {{ $totalVoters ?? 0 }};
+
+                // Calculate participation rate (this won't exceed 100%)
                 const participationRate = totalVoters > 0
-                    ? ((totalVotes / totalVoters) * 100).toFixed(2)
+                    ? Math.min(((totalVotes / totalVoters) * 100), 100).toFixed(2)
                     : 0;
 
                 // Update stats cards
                 document.getElementById('totalVotes').textContent = totalVotes;
                 document.getElementById('participationRate').textContent = `${participationRate}%`;
+
+                // Calculate percentages for pie chart (based on actual votes)
+                const votePercentages = data.map(candidate => {
+                    return totalVotes > 0
+                        ? ((candidate.votes_count / totalVotes) * 100).toFixed(2)
+                        : 0;
+                });
 
                 // Update chart
                 if (chart) {
@@ -247,9 +261,9 @@
                 chart = new Chart(ctx, {
                     type: 'pie',
                     data: {
-                        labels: data.map(candidate => candidate.name),
+                        labels: data.map(candidate => `${candidate.name} (${candidate.votes_count} suara)`),
                         datasets: [{
-                            data: data.map(candidate => candidate.votes_count),
+                            data: votePercentages, // Use percentages instead of raw votes
                             backgroundColor: colors,
                             borderColor: 'rgba(255, 255, 255, 0.2)',
                             borderWidth: 1
@@ -267,12 +281,19 @@
                                         size: 14
                                     }
                                 }
+                            },
+                            tooltip: {
+                                callbacks: {
+                                    label: function (context) {
+                                        return `${context.label}: ${context.raw}%`;
+                                    }
+                                }
                             }
                         }
                     }
                 });
 
-                // Update table
+                // Update table with vote-based percentages
                 updateTable(data, totalVotes);
 
             } catch (error) {
