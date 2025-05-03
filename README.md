@@ -89,7 +89,6 @@ E-Voting/
 ├── public/              # Public assets
 ├── resources/
 │   ├── views/           # Blade templates
-│   └── css/            # Stylesheets
 └── routes/              # Application routes
 ```
 
