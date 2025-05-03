@@ -14,7 +14,7 @@ A secure and user-friendly electronic voting system built with Laravel, featurin
 
 ## Tech Stack
 
-- **Framework:** Laravel 10.x
+- **Framework:** Laravel 12
 - **Database:** MySQL
 - **Frontend:** 
   - Bootstrap 5
@@ -24,9 +24,8 @@ A secure and user-friendly electronic voting system built with Laravel, featurin
 
 ## Requirements
 
-- PHP >= 8.1
+- PHP >= 8.2
 - Composer
-- Node.js & NPM
 - MySQL
 
 ## Installation
