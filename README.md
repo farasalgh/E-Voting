@@ -84,7 +84,6 @@ E-Voting/
 ├── app/
 │   ├── Http/Controllers/   # Controllers
 │   ├── Models/            # Database models
-│   └── Policies/         # Authorization policies
 ├── database/
 │   ├── migrations/       # Database migrations
 │   └── seeders/         # Database seeders
