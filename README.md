@@ -107,18 +107,6 @@ E-Voting/
 - View election results
 - Update profile
 
-## Screenshots
-
-[Add screenshots of your application here]
-
-## Security
-
-- CSRF Protection
-- SQL Injection Prevention
-- XSS Protection
-- Session Security
-- Role-based Access Control
-
 ## Contributing
 
 1. Fork the repository
