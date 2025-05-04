@@ -12,6 +12,9 @@ class AdminController extends Controller
 {
     public function dashboard()
     {
+        // Get per page value from request, default to 10
+        $perPage = request('perPage', 10);
+    
         $data = [
             'totalUsers' => User::count(),
             'totalVotes' => Votes::count(),
@@ -23,8 +26,12 @@ class AdminController extends Controller
             'candidates' => Candidates::withCount('votes')
                 ->latest()
                 ->get(),
+            // Add paginated users
+            'users' => User::latest()
+                ->paginate($perPage)
+                ->withQueryString(),
         ];
-
+    
         return view('admin.dashboard', $data);
     }
 
